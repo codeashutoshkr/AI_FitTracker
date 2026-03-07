@@ -34,15 +34,14 @@ router.post('/insights', auth, async (req, res) => {
       Activities: ${JSON.stringify(activities)}
     `;
 
-    console.log(`[AI] Generating insights for ${username} using gemini-pro...`);
+    console.log(`[AI] Generating insights for ${username} using gemini-1.5-flash...`);
     if (mongoose.connection.readyState !== 1) {
       console.log(`[AI DB WARNING] State: ${mongoose.connection.readyState}`);
     }
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log(`[AI] Successfully generated insights.`);
+const result = await model.generateContent(prompt);
+const text = result.response.text();
 
+    console.log(`[AI] Successfully generated insights.`);
     res.json({ insights: text });
   } catch (error) {
     console.error("AI Insights Error:", error.message);
