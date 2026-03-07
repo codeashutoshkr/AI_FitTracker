@@ -25,7 +25,7 @@ router.post('/insights', auth, async (req, res) => {
     // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // Trying gemini-pro as gemini-2.0-flash seems to have quota issues (limit: 0)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
       You are an expert AI fitness coach. Analyze the following recent workout activities for your client named "${username}".
@@ -38,7 +38,10 @@ router.post('/insights', auth, async (req, res) => {
     if (mongoose.connection.readyState !== 1) {
       console.log(`[AI DB WARNING] State: ${mongoose.connection.readyState}`);
     }
-const result = await model.generateContent(prompt);
+const result = await model.generateContent({
+  contents: [{ role: "user", parts: [{ text: prompt }] }]
+});
+
 const text = result.response.text();
 
     console.log(`[AI] Successfully generated insights.`);
