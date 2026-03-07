@@ -53,6 +53,10 @@ if (MONGO_URI) {
   console.log('MONGO_URI not found in .env. Skipping MongoDB connection for now.');
 }
 
+app.get("/", (req, res) => {
+  res.send("FitTracker API running");
+});
+
 // Import Routes
 const authRouter = require('./routes/auth');
 console.log('Auth Router loaded:', typeof authRouter === 'function');
