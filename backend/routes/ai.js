@@ -25,7 +25,7 @@ router.post('/insights', auth, async (req, res) => {
     // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // Trying gemini-pro as gemini-2.0-flash seems to have quota issues (limit: 0)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
     const prompt = `
       You are an expert AI fitness coach. Analyze the following recent workout activities for your client named "${username}".
