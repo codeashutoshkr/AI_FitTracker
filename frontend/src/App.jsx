@@ -24,12 +24,12 @@ function MainApp() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const fetchActivities = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_URL}/activities`, {
+      const res = await axios.get(`${API_URL}/api/activities`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setActivities(res.data);
@@ -48,7 +48,7 @@ function MainApp() {
   const handleAddActivity = async (activityData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API_URL}/activities`, activityData, {
+      await axios.post(`${API_URL}/api/activities`, activityData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchActivities(); // Refresh list after adding

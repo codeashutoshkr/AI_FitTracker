@@ -20,9 +20,9 @@ export default function Dashboard({ activities }) {
   const saveGoal = async () => {
     setUpdating(true);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
       const token = localStorage.getItem('token');
-      const res = await axios.put(`${API_URL}/auth/profile`, 
+      const res = await axios.put(`${API_URL}/api/auth/profile`, 
         { weeklyGoal: tempGoal },
         { headers: { Authorization: `Bearer ${token}` } }
       );
