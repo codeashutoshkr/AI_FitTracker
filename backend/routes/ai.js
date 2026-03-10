@@ -29,9 +29,14 @@ router.post('/insights', auth, async (req, res) => {
 
     const prompt = `
       You are an expert AI fitness coach. Analyze the following recent workout activities for your client named "${username}".
-      Provide a short, highly encouraging, and actionable insight (max 2-3 sentences) to help ${username} improve or stay motivated.
+      Provide a short, highly encouraging, and actionable insight (max 3-4 sentences) to help ${username} improve or stay motivated.
       Speak directly to them using their name.
       Activities: ${JSON.stringify(activities)}
+      Generate a weekly fitness plan including:
+      - cardio
+      - strength
+      - rest day
+      - nutrition tip
     `;
 
     console.log(`[AI] Generating insights for ${username} using gemini-1.5-flash...`);
