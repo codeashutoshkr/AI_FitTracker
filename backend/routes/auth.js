@@ -3,7 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
+const { OAuth2Client } = require('google-auth-library');
 
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 // Register
 router.post('/register', async (req, res) => {
   try {
@@ -63,6 +65,51 @@ router.post('/login', async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// OAuth2.O
+router.post("/google", async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    //  Verify token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { email, name, picture } = payload;
+
+    //  Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        email,
+        name,
+        profilePic: picture,
+      });
+    }
+
+    // 🔑 Create JWT
+    const jwtToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // 📤 Send response
+    res.json({
+      user,
+      token: jwtToken,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ message: "Google authentication failed" });
   }
 });
 

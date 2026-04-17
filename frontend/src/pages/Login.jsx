@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Loader2, ArrowRight, User, Lock } from 'lucide-react';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -29,6 +30,30 @@ const res = await axios.post(`${API_URL}/api/auth/login`, { username, password }
       setLoading(false);
     }
   };
+  // Google Authentication
+  const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    setLoading(true);
+
+    const token = credentialResponse.credential;
+
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+    const res = await axios.post(`${API_URL}/auth/google`, {
+      token,
+    });
+
+    // Use your existing auth system
+    login(res.data.user, res.data.token);
+
+    navigate('/');
+  } catch (err) {
+    console.error(err);
+    setError('Google login failed');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[var(--color-dark-bg)] flex items-center justify-center p-4 relative overflow-hidden">
@@ -96,6 +121,21 @@ const res = await axios.post(`${API_URL}/api/auth/login`, { username, password }
               )}
             </button>
           </form>
+    <div className="mt-6">
+          <div className="flex items-center gap-3 mb-4">
+          <div className="flex-1 h-px bg-gray-700"></div>
+          <span className="text-gray-400 text-sm">OR</span>
+          <div className="flex-1 h-px bg-gray-700"></div>
+          </div>
+
+       <div className="flex justify-center text-mist-300 mb-3">Contine With Google</div>
+      <div className="flex justify-center">
+         <GoogleLogin
+        onSuccess={handleGoogleSuccess}
+        onError={() => setError("Google Login Failed")}
+        />
+      </div>
+    </div>
 
           <p className="mt-8 text-center text-sm text-gray-400">
             Don't have an account?{' '}

@@ -2,17 +2,32 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  username: {
+    username: {
     type: String,
-    required: true,
     unique: true,
+    sparse: true,   // allows null values
     trim: true,
     minlength: 3
   },
   password: {
     type: String,
-    required: true,
     minlength: 6
+  },
+
+  // For Google login
+  email: {
+    type: String,
+    unique: true,
+    sparse: true   // important for Google users
+  },
+  name: String,
+  profilePic: String,
+
+  // Optional: track login method 
+  provider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local'
   },
   weeklyGoal: {
     type: Number,

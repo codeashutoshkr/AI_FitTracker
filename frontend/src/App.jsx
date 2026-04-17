@@ -9,6 +9,8 @@ import Signup from './pages/Signup';
 import { LogOut, User } from 'lucide-react';
 import axios from 'axios';
 
+
+
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -72,9 +74,9 @@ function MainApp() {
         <div className="flex items-center gap-4 bg-gray-900/50 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-gray-800/60 shadow-lg">
           <div className="flex items-center gap-2 text-indigo-300 font-medium">
             <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
-              <User size={16} />
+               <img src={user?.profilePic} alt="profile" className="w-8 h-8 rounded-full"/>
             </div>
-            <span>{user?.username}</span>
+            <span>{user?.username || user?.name}</span>
           </div>
           <div className="w-px h-6 bg-gray-700"></div>
           <button
