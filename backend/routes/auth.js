@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+console.log("ENV CLIENT ID:", process.env.GOOGLE_CLIENT_ID);
 // Register
 router.post('/register', async (req, res) => {
   try {
