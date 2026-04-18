@@ -31,7 +31,7 @@ function MainApp() {
   const fetchActivities = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_URL}/api/activities`, {
+      const res = await axios.get(`${API_URL}/activities`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setActivities(res.data);
@@ -50,7 +50,7 @@ function MainApp() {
   const handleAddActivity = async (activityData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API_URL}/api/activities`, activityData, {
+      await axios.post(`${API_URL}/activities`, activityData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchActivities(); // Refresh list after adding

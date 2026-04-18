@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-console.log("ENV CLIENT ID:", process.env.GOOGLE_CLIENT_ID);
+
 // Register
 router.post('/register', async (req, res) => {
   try {
@@ -97,7 +97,7 @@ router.post("/google", async (req, res) => {
 
     // 🔑 Create JWT
     const jwtToken = jwt.sign(
-      { id: user._id },
+      { userId: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );

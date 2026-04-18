@@ -28,7 +28,7 @@ export default function Signup() {
 
     try {
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-const res = await axios.post(`${API_URL}/api/auth/register`, { username, password });
+const res = await axios.post(`${API_URL}/auth/register`, { username, password });
 
       login(res.data.user, res.data.token);
       navigate('/');
@@ -47,7 +47,7 @@ const res = await axios.post(`${API_URL}/api/auth/register`, { username, passwor
 
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-    const res = await axios.post(`${API_URL}/api/auth/google`, {
+    const res = await axios.post(`${API_URL}/auth/google`, {
       token,
     });
 

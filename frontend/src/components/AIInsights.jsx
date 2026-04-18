@@ -16,11 +16,11 @@ export default function AIInsights({ activities }) {
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     const token = localStorage.getItem('token');
     
-    console.log(`[AI DEBUG] Target URL: ${API_URL}/api/ai/insights`);
+    console.log(`[AI DEBUG] Target URL: ${API_URL}/ai/insights`);
     console.log(`[AI DEBUG] Token Present: ${!!token}`);
     
     try {
-      const response = await axios.post(`${API_URL}/api/ai/insights`, 
+      const response = await axios.post(`${API_URL}/ai/insights`, 
         { activities: activities.slice(0, 7) },
         { 
           headers: { Authorization: `Bearer ${token}` },
