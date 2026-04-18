@@ -130,6 +130,8 @@ router.put('/profile', auth, async (req, res) => {
       message: 'Profile updated', 
       user: { 
         id: user._id, 
+        name: user.name,
+        profilePic: user.profilePic,
         username: user.username, 
         weeklyGoal: user.weeklyGoal,
         preferences: user.preferences
