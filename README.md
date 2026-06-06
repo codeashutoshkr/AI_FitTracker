@@ -1,4 +1,4 @@
-# AI_FitTracker
+
 # 🏋️ AI_FitTracker
 
 <div align="center">
